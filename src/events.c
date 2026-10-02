@@ -18,7 +18,7 @@
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
 #include <SDL_scancode.h>
-#include "camlsdl2/keycode_stub.h"
+#include "../include/camlsdl2_keycode.h"
 
 
 #if 0
@@ -995,6 +995,23 @@ Val_SDL_Event(SDL_Event * event)
     default: caml_failwith("SDL Event");
     }
     caml_failwith("SDL Event");
+}
+
+
+CAMLprim value
+caml_SDL_WaitEvent(value unit)
+{
+    CAMLparam1(unit);
+    CAMLlocal1(ret);
+
+    SDL_Event event;
+    int r = SDL_WaitEvent(&event);
+    if (!r) {
+        ret = Val_none;
+    } else {
+        ret = caml_alloc_some(Val_SDL_Event(&event));
+    }
+    CAMLreturn(ret);
 }
 
 CAMLprim value

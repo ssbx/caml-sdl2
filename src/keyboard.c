@@ -15,7 +15,7 @@
 #include <caml/fail.h>
 
 #include <SDL_keyboard.h>
-#include "camlsdl2/rect_stub.h"
+#include "../include/camlsdl2_rect.h"
 
 CAMLprim value
 caml_SDL_StartTextInput(value unit)

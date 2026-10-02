@@ -399,6 +399,27 @@ module BlendMode = struct
   ;;
 end
 
+
+module ScaleMode = struct
+  type t =
+    | NEAREST
+    | LINEAR
+    | BEST
+
+  let to_string = function
+    | NEAREST -> "SDL_SCALEMODE_NEAREST"
+    | LINEAR -> "SDL_SCALEMODE_LINEAR"
+    | BEST -> "SDL_SCALEMODE_BEST"
+  ;;
+
+  let of_string = function
+    | "SDL_SCALEMODE_NEAREST" -> NEAREST
+    | "SDL_SCALEMODE_LINEAR" -> LINEAR
+    | "SDL_SCALEMODE_BEST" -> BEST
+    | invalid -> invalid_arg (Printf.sprintf "ScaleMode.t %s" invalid)
+  ;;
+end
+
 external set_clipboard_text : text:string -> int = "caml_SDL_SetClipboardText"
 external get_clipboard_text : unit -> string = "caml_SDL_GetClipboardText"
 external has_clipboard_text : unit -> bool = "caml_SDL_HasClipboardText"
@@ -2231,6 +2252,7 @@ external set_surface_blend_mode
   -> unit
   = "caml_SDL_SetSurfaceBlendMode"
 
+
 external surface_get_pixelformat_t
   :  Surface.t
   -> PixelFormat.t
@@ -2330,6 +2352,7 @@ end
 
 module Window = struct
   type t
+  external null : unit -> t = "caml_SDL_NullWindowVal"
 end
 
 module WindowFlags = struct
@@ -2420,6 +2443,7 @@ external get_window_size : Window.t -> int * int = "caml_SDL_GetWindowSize"
 
 module Renderer = struct
   type t
+  external null : unit -> t = "caml_SDL_NullRendererVal"
 end
 
 module RendererInfo = struct
@@ -2609,7 +2633,8 @@ external render_set_scale
   = "caml_SDL_RenderSetScale"
 
 external render_present : Renderer.t -> unit = "caml_SDL_RenderPresent"
-external render_clear : Renderer.t -> unit = "caml_SDL_RenderClear"
+(*external render_clear : (nativeint [@unboxed]) -> unit = "caml_SDL_RenderClear_byte""caml_SDL_RenderClear" [@@noalloc]*)
+external render_clear : Renderer.t -> unit = "caml_SDL_RenderClear_byte"
 external get_num_render_drivers : unit -> int = "caml_SDL_GetNumRenderDrivers"
 external get_render_driver_info : int -> RendererInfo.t = "caml_SDL_GetRenderDriverInfo"
 
@@ -2659,6 +2684,14 @@ external set_texture_blend_mode
   -> unit
   = "caml_SDL_SetTextureBlendMode"
 [@@noalloc]
+
+external set_texture_scale_mode
+  :  Texture.t
+  -> ScaleMode.t
+  -> unit
+  = "caml_SDL_SetTextureScaleMode"
+[@@noalloc]
+
 
 external get_texture_blend_mode
   :  Texture.t
@@ -2928,6 +2961,7 @@ module Event = struct
 end
 
 external poll_event : unit -> Event.t option = "caml_SDL_PollEvent"
+external wait_event : unit -> Event.t option = "caml_SDL_WaitEvent"
 
 module MouseButton = struct
   type t =

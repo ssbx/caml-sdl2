@@ -17,7 +17,7 @@
 #include <SDL.h>
 #include <SDL_pixels.h>
 
-#include "camlsdl2/pixel_stub.h"
+#include "../include/camlsdl2_pixel.h"
 
 const Uint32 caml_sdl_pixelformat_table[] = {
     SDL_PIXELFORMAT_UNKNOWN,

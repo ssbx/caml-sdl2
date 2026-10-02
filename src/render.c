@@ -16,12 +16,13 @@
 
 #include <SDL_render.h>
 
-#include "camlsdl2/render_stub.h"
-#include "camlsdl2/video_stub.h"
-#include "camlsdl2/surface_stub.h"
-#include "camlsdl2/rect_stub.h"
-#include "camlsdl2/blendmode_stub.h"
-#include "camlsdl2/pixel_stub.h"
+#include "../include/camlsdl2_render.h"
+#include "../include/camlsdl2_video.h"
+#include "../include/camlsdl2_surface.h"
+#include "../include/camlsdl2_rect.h"
+#include "../include/camlsdl2_blendmode.h"
+#include "../include/camlsdl2_scalemode.h"
+#include "../include/camlsdl2_pixel.h"
 
 const int caml_sdl_textureaccess_table[] = {
     SDL_TEXTUREACCESS_STATIC,
@@ -93,6 +94,13 @@ caml_SDL_CreateWindowAndRenderer(
     Store_field(ret, 0, Val_SDL_Window(window));
     Store_field(ret, 1, Val_SDL_Renderer(renderer));
     CAMLreturn(ret);
+}
+
+CAMLprim value
+caml_SDL_NullRendererVal(value unit)
+{
+    CAMLparam0();
+    CAMLreturn(Val_SDL_Renderer(NULL));
 }
 
 CAMLprim value
@@ -463,13 +471,27 @@ caml_SDL_RenderPresent(value renderer)
     CAMLreturn(Val_unit);
 }
 
+
 CAMLprim value
-caml_SDL_RenderClear(value renderer)
+caml_SDL_RenderClear(intnat renderer)
+{
+    int r = SDL_RenderClear((SDL_Renderer*) renderer);
+    if (r) caml_failwith("Sdlrender.clear");
+    return Val_int(0);
+}
+
+CAMLprim value
+caml_SDL_RenderClear_byte(value renderer)
 {
     CAMLparam1(renderer);
+    /*
     int r = SDL_RenderClear(SDL_Renderer_val(renderer));
     if (r) caml_failwith("Sdlrender.clear");
     CAMLreturn(Val_unit);
+    */
+
+    CAMLreturn(caml_SDL_RenderClear(Nativeint_val(renderer)));
+
 }
 
 /*
@@ -730,6 +752,19 @@ caml_SDL_SetTextureColorMod3(
             Uint8_val(r), Uint8_val(g), Uint8_val(b));
     if (s)
         caml_failwith("Sdltexture.set_color_mod3");
+    CAMLreturn(Val_unit);
+}
+
+CAMLprim value
+caml_SDL_SetTextureScaleMode(value texture, value scaleMode)
+{
+    CAMLparam2(texture, scaleMode);
+    int r =
+        SDL_SetTextureScaleMode(
+            SDL_Texture_val(texture),
+            SDL_ScaleMode_val(scaleMode));
+    if (r)
+        caml_failwith("Sdltexture.set_scale_mode");
     CAMLreturn(Val_unit);
 }
 

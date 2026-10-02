@@ -4,6 +4,11 @@
 #include <SDL_video.h>
 
 /* SDL_Window */
+
+#define Val_SDL_Window(p) (caml_copy_nativeint((intnat) p))
+#define SDL_Window_val(v) ((SDL_Window *) Nativeint_val(v))
+
+/*
 static value Val_SDL_Window(SDL_Window * p)
 {
     return caml_copy_nativeint((intnat) p);
@@ -13,21 +18,29 @@ static SDL_Window * SDL_Window_val(value v)
 {
     return (SDL_Window *) Nativeint_val(v);
 }
+*/
 
 Uint32 Val_SDL_WindowFlags(value mask_list);
 
 
 
 /* SDL_GLContext */
+/*
 static value Val_SDL_GLContext(SDL_GLContext p)
 {
     return caml_copy_nativeint((intnat) p);
 }
+*/
 
+#define Val_SDL_GLContext(p) (caml_copy_nativeint((intnat) p))
+#define SDL_GLContext_val(v) ((SDL_GLContext) Nativeint_val(v))
+
+/*
 static SDL_GLContext SDL_GLContext_val(value v)
 {
     return (SDL_GLContext) Nativeint_val(v);
 }
+*/
 
 #endif /* _CAML_SDL_VIDEO_ */
 

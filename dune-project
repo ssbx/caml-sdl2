@@ -1,4 +1,4 @@
-(lang dune 3.15)
+(lang dune 3.17)
 
 (name caml-sdl2)
 (version 1.0)

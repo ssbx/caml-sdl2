@@ -19,33 +19,34 @@
  (name camlSDL2)
  (modes native)
  (public_headers
-  (glob_files camlsdl2/*.h))
+  (glob_files include/*.h))
  (foreign_stubs
   (language c)
   (names
-   rect_stub
-   pixel_stub
-   hints_stub
-   keycode_stub
-   error_stub
-   blendmode_stub
-   surface_stub
-   init_stub
-   timer_stub
-   events_stub
-   version_stub
-   render_stub
-   rwops_stub
-   power_stub
-   mouse_stub
-   keyboard_stub
-   audio_stub
-   clipboard_stub
-   cpuinfo_stub
-   filesystem_stub
-   joystick_stub
-   video_stub
-   platform_stub)
+   rect
+   pixel
+   hints
+   keycode
+   error
+   blendmode
+   scalemode
+   surface
+   init
+   timer
+   events
+   version
+   render
+   rwops
+   power
+   mouse
+   keyboard
+   audio
+   clipboard
+   cpuinfo
+   filesystem
+   joystick
+   video
+   platform)
   (flags
    :standard
    (:include c_flags.sexp)))

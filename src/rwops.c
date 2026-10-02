@@ -17,7 +17,7 @@
 
 #include <SDL_rwops.h>
 
-#include "camlsdl2/rwops_stub.h"
+#include "../include/camlsdl2_rwops.h"
 
 #if OCAML_VERSION < 40600
 #define Bytes_val(x) String_val(x)

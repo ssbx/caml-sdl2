@@ -16,9 +16,9 @@
 
 #include <GL/glew.h>
 #include <SDL_video.h>
-#include "camlsdl2/video_stub.h"
-#include "camlsdl2/surface_stub.h"
-#include "camlsdl2/rect_stub.h"
+#include "../include/camlsdl2_video.h"
+#include "../include/camlsdl2_surface.h"
+#include "../include/camlsdl2_rect.h"
 
 static const Uint32 caml_sdl_windowflags_table[] = {
     SDL_WINDOW_FULLSCREEN,
@@ -273,6 +273,14 @@ int SDL_GetWindowGammaRamp(
       Uint16 * green,
       Uint16 * blue);
 */
+
+
+CAMLprim value
+caml_SDL_NullWindowVal(value unit)
+{
+    CAMLparam0();
+    CAMLreturn(Val_SDL_Window(NULL));
+}
 
 CAMLprim value
 caml_SDL_DestroyWindow(value window)

@@ -2,4 +2,5 @@
 
 (tests
  (names test_empty_win)
+ (modes native)
  (libraries caml-sdl2))

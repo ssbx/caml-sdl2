@@ -278,6 +278,17 @@ module BlendMode : sig
   val of_string : string -> t
 end
 
+
+module ScaleMode : sig
+  type t =
+    | NEAREST
+    | LINEAR
+    | BEST
+  val to_string : t -> string
+  val of_string : string -> t
+end
+
+
 (** {2:surf Surface Creation and Simple Drawing} *)
 
 module Surface : sig
@@ -413,6 +424,7 @@ external create_rgb_surface_from
 
 module Window : sig
   type t
+  external null : unit -> t = "caml_SDL_NullWindowVal"
 end
 
 module WindowFlags : sig
@@ -558,6 +570,7 @@ external get_window_size : Window.t -> int * int = "caml_SDL_GetWindowSize"
 
 module Renderer : sig
   type t
+  external null : unit -> t = "caml_SDL_NullRendererVal"
 end
 
 module RendererInfo : sig
@@ -723,7 +736,7 @@ external render_set_scale
   = "caml_SDL_RenderSetScale"
 
 external render_present : Renderer.t -> unit = "caml_SDL_RenderPresent"
-external render_clear : Renderer.t -> unit = "caml_SDL_RenderClear"
+external render_clear : Renderer.t -> unit = "caml_SDL_RenderClear_byte"
 external get_num_render_drivers : unit -> int = "caml_SDL_GetNumRenderDrivers"
 external get_render_driver_info : int -> RendererInfo.t = "caml_SDL_GetRenderDriverInfo"
 
@@ -773,6 +786,14 @@ external set_texture_blend_mode
   -> unit
   = "caml_SDL_SetTextureBlendMode"
 [@@noalloc]
+
+external set_texture_scale_mode
+  :  Texture.t
+  -> ScaleMode.t
+  -> unit
+  = "caml_SDL_SetTextureScaleMode"
+[@@noalloc]
+
 
 external get_texture_blend_mode
   :  Texture.t
@@ -1705,3 +1726,4 @@ module Event : sig
 end
 
 external poll_event : unit -> Event.t option = "caml_SDL_PollEvent"
+external wait_event : unit -> Event.t option = "caml_SDL_WaitEvent"
