@@ -155,10 +155,10 @@ external point_in_rect : p:Point.t -> r:Rect.t -> bool = "caml_SDL_PointInRect"
 
 module Color = struct
   type t =
-    { r : uint8
-    ; g : uint8
-    ; b : uint8
-    ; a : uint8
+    { r : int
+    ; g : int
+    ; b : int
+    ; a : int
     }
 
   let make ~r ~g ~b ~a = { r; g; b; a }
@@ -2550,6 +2550,9 @@ external set_render_draw_color
   -> a:int
   -> unit
   = "caml_SDL_SetRenderDrawColor"
+
+let set_render_draw_color2 (rdr : Renderer.t) (col : Color.t) =
+    set_render_draw_color rdr ~r:col.r ~g:col.g ~b:col.b ~a:col.a
 
 external set_render_draw_blend_mode
   :  Renderer.t

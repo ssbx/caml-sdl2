@@ -197,13 +197,13 @@ external point_in_rect : p:Point.t -> r:Rect.t -> bool = "caml_SDL_PointInRect"
 
 module Color : sig
   type t =
-    { r : uint8
-    ; g : uint8
-    ; b : uint8
-    ; a : uint8
+    { r : int
+    ; g : int
+    ; b : int
+    ; a : int
     }
 
-  val make : r:uint8 -> g:uint8 -> b:uint8 -> a:uint8 -> t
+  val make : r:int -> g:int -> b:int -> a:int -> t
 end
 
 module PixelFormat : sig
@@ -653,6 +653,8 @@ external set_render_draw_color
   -> a:int
   -> unit
   = "caml_SDL_SetRenderDrawColor"
+
+val set_render_draw_color2 : Renderer.t -> Color.t -> unit
 
 external set_render_draw_blend_mode
   :  Renderer.t
