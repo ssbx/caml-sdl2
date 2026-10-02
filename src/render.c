@@ -104,6 +104,13 @@ caml_SDL_NullRendererVal(value unit)
 }
 
 CAMLprim value
+caml_SDL_NullTextureVal(value unit)
+{
+    CAMLparam0();
+    CAMLreturn(Val_SDL_Texture(NULL));
+}
+
+CAMLprim value
 caml_SDL_CreateRenderer(value window, value index, value _flags)
 {
     CAMLparam3(window,index,_flags);

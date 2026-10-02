@@ -2508,6 +2508,7 @@ end
 
 module Texture = struct
   type t
+  external null : unit -> t = "caml_SDL_NullTextureVal"
 end
 
 external create_window_and_renderer
